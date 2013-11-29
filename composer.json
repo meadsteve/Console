@@ -1,0 +1,14 @@
+{
+    "name": "mead-steve/console",
+    "description": "shell_exec abstraction libraray",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Steve B",
+            "email": "meadsteve@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {"MeadSteve\\": "src/"}
+    }
+}
