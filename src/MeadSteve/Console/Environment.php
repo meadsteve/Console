@@ -31,14 +31,14 @@ class Environment
     /**
      * @return bool
      */
-    function IsWindows() {
+    function isWindows() {
         return substr(strtolower($this->osString), 0, 3) == self::PREFIX_WINDOWS;
     }
 
     /**
      * @return bool
      */
-    function IsLinux() {
+    function isLinux() {
         if (substr(strtolower($this->osString), 0, 5) == self::PREFIX_LINUX) {
             return true;
         }
@@ -48,7 +48,7 @@ class Environment
     /**
      * @return bool
      */
-    function IsUnixLike() {
+    function isUnixLike() {
         if (substr(strtolower($this->osString), 0, 5) == self::PREFIX_LINUX) {
             return true;
         }

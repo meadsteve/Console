@@ -13,49 +13,49 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
     function testIsWindows_ReturnsTrueInWindowsEnvironment()
     {
         $testedEnvironment = new Environment(self::WINDOWS_WINDOWS);
-        $isWindows = $testedEnvironment->IsWindows();
+        $isWindows = $testedEnvironment->isWindows();
         $this->assertTrue($isWindows);
     }
 
     function testIsWindows_ReturnsTrueInWindowsNTEnvironment()
     {
         $testedEnvironment = new Environment(self::WINDOWS_NT);
-        $isWindows = $testedEnvironment->IsWindows();
+        $isWindows = $testedEnvironment->isWindows();
         $this->assertTrue($isWindows);
     }
 
     function testIsWindows_ReturnsFalseInLinuxEnvironment()
     {
         $testedEnvironment = new Environment(self::LINUX_LINUX);
-        $isWindows = $testedEnvironment->IsWindows();
+        $isWindows = $testedEnvironment->isWindows();
         $this->assertFalse($isWindows);
     }
 
     function testIsLinux_ReturnsTrueInLinuxEnvironment()
     {
         $testedEnvironment = new Environment(self::LINUX_LINUX);
-        $isLinux = $testedEnvironment->IsLinux();
+        $isLinux = $testedEnvironment->isLinux();
         $this->assertTrue($isLinux);
     }
 
     function testIsLinux_ReturnsFalseInWinNTEnvironment()
     {
         $testedEnvironment = new Environment(self::WINDOWS_NT);
-        $isLinux = $testedEnvironment->IsLinux();
+        $isLinux = $testedEnvironment->isLinux();
         $this->assertFalse($isLinux);
     }
 
     function testIsUnixLike_ReturnsTrueInLinuxEnvironment()
     {
         $testedEnvironment = new Environment(self::LINUX_LINUX);
-        $isUnixLike = $testedEnvironment->IsUnixLike();
+        $isUnixLike = $testedEnvironment->isUnixLike();
         $this->assertTrue($isUnixLike);
     }
 
     function testIsUnixLike_ReturnsFalseInWinNTEnvironment()
     {
         $testedEnvironment = new Environment(self::WINDOWS_NT);
-        $isUnixLike = $testedEnvironment->IsUnixLike();
+        $isUnixLike = $testedEnvironment->isUnixLike();
         $this->assertFalse($isUnixLike);
     }
 
