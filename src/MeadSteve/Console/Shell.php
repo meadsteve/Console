@@ -50,8 +50,27 @@ class Shell
         }
     }
 
+    /**
+     * @param string $command
+     * @return Command
+     */
     public function newCommand($command)
     {
         return new Command($command, $this->executor, $this->translator);
+    }
+
+    /**
+     * @param string $command
+     * @param array $args
+     * @return array
+     */
+    public function executeCommand($command, $args = array())
+    {
+        $command = $this->newCommand($command);
+        foreach($args as $arg) {
+            $command->addArg($arg);
+        }
+
+        return $command->execute();
     }
 } 

@@ -2,7 +2,7 @@
 
 use \MeadSteve\Console\Shell;
 
-class ShellTest extends PHPUnit_Framework_TestCase
+class ShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
 {
     /**
      * @var \MeadSteve\Console\Shell
@@ -11,14 +11,29 @@ class ShellTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->testedShell = new Shell();
+        parent::setUp();
     }
 
     public function testNewCommand_ReturnsCommandObject()
     {
+        $this->testedShell = new Shell();
         $command = $this->testedShell->newCommand("git");
         $this->assertInstanceOf('\MeadSteve\Console\Command', $command);
     }
 
+    public function testExecuteCommand_CallsExecuteUsingExecutor()
+    {
+        $expectedCommand = "hello";
+        $expectedOutput = array("world");
+
+        $mockedExecutor = $this->prophesize('\MeadSteve\Console\Executor');
+        $mockedExecutor->execute($expectedCommand)->willReturn($expectedOutput);
+
+        $this->testedShell = new Shell(null, null, $mockedExecutor->reveal());
+
+        $output = $this->testedShell->executeCommand($expectedCommand);
+
+        $this->assertEquals($expectedOutput, $output);
+    }
 }
  
