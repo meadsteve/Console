@@ -1,41 +1,33 @@
 <?php
 
 use MeadSteve\Console\Command;
+use \Prophecy\Argument;
 
 class CommandTest extends \Prophecy\PhpUnit\ProphecyTestCase
 {
 
-        public function testExecute_CallsExecutor()
+    public function testExecute_CallsExecutorWithTranslatorResult()
     {
-        $mockExecutor = $this->prophesize('MeadSteve\Console\Executor');
-        $executeMethod = $mockExecutor->execute("git");
+        $commandToRun = "git";
+        $commandAfterTranslation = "git-";
 
-        $testedCommmand = new Command("git", $mockExecutor->reveal());
+        $mockTranslator = $this->prophesize('MeadSteve\Console\Translators\BasicTranslator');
+        $translateMethod = $mockTranslator->translate(Argument::type('MeadSteve\Console\Command'))
+                                          ->willReturn($commandAfterTranslation);
+
+        $mockExecutor = $this->prophesize('MeadSteve\Console\Executor');
+        $executeMethod = $mockExecutor->execute($commandAfterTranslation);
+
+        $testedCommmand = new Command(
+            $commandToRun,
+            $mockExecutor->reveal(),
+            $mockTranslator->reveal()
+        );
+
         $testedCommmand->execute();
 
         $executeMethod->shouldHaveBeenCalledTimes(1);
-    }
-
-    public function testaddArg_SingleArgAppendsToExecutedCommandWithSpaces()
-    {
-        $mockExecutor = $this->prophesize('MeadSteve\Console\Executor');
-        $executeMethod = $mockExecutor->execute("git status");
-
-        $testedCommmand = new Command("git", $mockExecutor->reveal());
-        $testedCommmand->addArg('status')->execute();
-
-        $executeMethod->shouldHaveBeenCalledTimes(1);
-    }
-
-        public function testaddArg_MultipleArgsAppendedToExecutedCommandWithSpaces()
-    {
-        $mockExecutor = $this->prophesize('MeadSteve\Console\Executor');
-        $executeMethod = $mockExecutor->execute("testing 1 2");
-
-        $testedCommmand = new Command("testing", $mockExecutor->reveal());
-        $testedCommmand->addArg('1')->addArg('2')->execute();
-
-        $executeMethod->shouldHaveBeenCalledTimes(1);
+        $translateMethod->shouldHaveBeenCalledTimes(1);
     }
 }
  

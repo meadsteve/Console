@@ -2,6 +2,7 @@
 
 namespace MeadSteve\Console;
 
+use MeadSteve\Console\Translators\CommandTranslator;
 
 class Command
 {
@@ -9,6 +10,11 @@ class Command
      * @var Executor
      */
     protected $executor;
+
+    /**
+     * @var \MeadSteve\Console\Translators\CommandTranslator
+     */
+    protected $translator;
 
     /**
      * @var string
@@ -23,11 +29,17 @@ class Command
     /**
      * @param string $command
      * @param Executor $executor
+     * @param Translators\CommandTranslator $translator
      */
-    function __construct($command, Executor $executor)
+    function __construct(
+        $command,
+        Executor $executor,
+        CommandTranslator $translator
+    )
     {
         $this->command = $command;
         $this->executor = $executor;
+        $this->translator = $translator;
     }
 
     /**
@@ -39,12 +51,20 @@ class Command
         return $this;
     }
 
+    function getArgs() {
+        return $this->args;
+    }
+
+    function getCommand() {
+        return $this->command;
+    }
+
     /**
      * @return array
      */
     function execute() {
-        $parts = $this->args;
-        array_unshift($parts, $this->command);
-        return $this->executor->execute(implode(' ',$parts));
+        return $this->executor->execute(
+            $this->translator->translate($this)
+        );
     }
 } 

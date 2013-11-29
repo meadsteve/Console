@@ -3,6 +3,8 @@
 namespace MeadSteve\Console;
 
 
+use MeadSteve\Console\Translators\BasicTranslator;
+
 class Shell
 {
     /**
@@ -15,8 +17,24 @@ class Shell
      */
     protected $environment;
 
-    function __construct(Environment $env = null, Executor $executor = null)
+    /**
+     * @var Translators\CommandTranslator
+     */
+    protected $translator;
+
+    function __construct(
+        Translators\CommandTranslator $translator = null,
+        Environment $env = null,
+        Executor $executor = null
+    )
     {
+        if ($translator) {
+            $this->translator = $translator;
+        }
+        else {
+            $this->translator = new BasicTranslator();
+        }
+
         if ($env) {
             $this->environment = $env;
         }
@@ -34,6 +52,6 @@ class Shell
 
     public function newCommand($command)
     {
-        return new Command($command, $this->executor);
+        return new Command($command, $this->executor, $this->translator);
     }
 } 
