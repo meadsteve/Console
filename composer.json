@@ -14,5 +14,5 @@
 
     "require-dev": {
         "phpspec/prophecy-phpunit": "1.0.x-dev"
-    },
+    }
 }
