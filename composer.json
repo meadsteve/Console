@@ -2,6 +2,9 @@
     "name": "mead-steve/console",
     "description": "shell_exec abstraction libraray",
     "minimum-stability": "stable",
+    "type": "library",
+    "keywords": ["exec","shell_exec", "execution abstraction"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Steve B",
