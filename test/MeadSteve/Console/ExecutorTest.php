@@ -21,6 +21,14 @@ class ExecutorTest extends PHPUnit_Framework_TestCase
         $this->testedExecutor->execute("git foobar");
     }
 
+    function testExecute_ThrowsCommandNotFoundErrorWhenNotFond()
+    {
+        $this->setExpectedException(
+            'MeadSteve\Console\Exceptions\CommandNotFoundError'
+        );
+        $this->testedExecutor->execute("gitDSFGscvb foobar");
+    }
+
     function testExecute_ReturnsArrayOnValidCommand()
     {
         $output = $this->testedExecutor->execute("git status");
