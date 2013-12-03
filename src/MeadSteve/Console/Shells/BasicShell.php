@@ -1,8 +1,11 @@
 <?php
 
-namespace MeadSteve\Console;
+namespace MeadSteve\Console\Shells;
 
-
+use MeadSteve\Console\Command;
+use MeadSteve\Console\Environment;
+use MeadSteve\Console\Executor;
+use MeadSteve\Console\Translators\CommandTranslator;
 use MeadSteve\Console\Translators\BasicTranslator;
 
 class BasicShell
@@ -18,12 +21,12 @@ class BasicShell
     protected $environment;
 
     /**
-     * @var Translators\CommandTranslator
+     * @var \MeadSteve\Console\Translators\CommandTranslator
      */
     protected $translator;
 
     function __construct(
-        Translators\CommandTranslator $translator = null,
+        CommandTranslator $translator = null,
         Environment $env = null,
         Executor $executor = null
     )

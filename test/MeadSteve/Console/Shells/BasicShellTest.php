@@ -1,6 +1,6 @@
 <?php
 
-use \MeadSteve\Console\BasicShell;
+use \MeadSteve\Console\Shells\BasicShell;
 
 class BasicShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
 {
