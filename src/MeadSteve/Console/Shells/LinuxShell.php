@@ -46,7 +46,7 @@ class LinuxShell extends BasicShell implements Shell
             $this->translator = new BasicTranslator();
         }
         else {
-            $this->translator = new FromLinuxTranslator();
+            $this->translator = new FromLinuxTranslator($this->environment);
         }
     }
 

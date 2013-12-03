@@ -12,7 +12,8 @@ class FromLinuxTranslatorTest extends \Prophecy\PhpUnit\ProphecyTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->testedTranslator = new FromLinuxTranslator();
+        $environment = $this->prophesize('\MeadSteve\Console\Environment');
+        $this->testedTranslator = new FromLinuxTranslator($environment->reveal());
     }
 
     public function testTranslate_ReturnsJustTheCommandAsStringWithNoArgs()
