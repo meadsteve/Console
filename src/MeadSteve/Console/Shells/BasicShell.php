@@ -8,7 +8,7 @@ use MeadSteve\Console\Executor;
 use MeadSteve\Console\Translators\CommandTranslator;
 use MeadSteve\Console\Translators\BasicTranslator;
 
-class BasicShell
+class BasicShell implements Shell
 {
     /**
      * @var Executor
