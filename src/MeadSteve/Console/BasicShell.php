@@ -5,7 +5,7 @@ namespace MeadSteve\Console;
 
 use MeadSteve\Console\Translators\BasicTranslator;
 
-class Shell
+class BasicShell
 {
     /**
      * @var Executor

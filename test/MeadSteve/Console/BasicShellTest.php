@@ -1,11 +1,11 @@
 <?php
 
-use \MeadSteve\Console\Shell;
+use \MeadSteve\Console\BasicShell;
 
-class ShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
+class BasicShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
 {
     /**
-     * @var \MeadSteve\Console\Shell
+     * @var \MeadSteve\Console\BasicShell
      */
     protected $testedShell;
 
@@ -16,7 +16,7 @@ class ShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
 
     public function testNewCommand_ReturnsCommandObject()
     {
-        $this->testedShell = new Shell();
+        $this->testedShell = new BasicShell();
         $command = $this->testedShell->newCommand("git");
         $this->assertInstanceOf('\MeadSteve\Console\Command', $command);
     }
@@ -29,7 +29,7 @@ class ShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
         $mockedExecutor = $this->prophesize('\MeadSteve\Console\Executor');
         $mockedExecutor->execute($expectedCommand)->willReturn($expectedOutput);
 
-        $this->testedShell = new Shell(null, null, $mockedExecutor->reveal());
+        $this->testedShell = new BasicShell(null, null, $mockedExecutor->reveal());
 
         $output = $this->testedShell->executeCommand($expectedCommand);
 
