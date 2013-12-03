@@ -29,10 +29,10 @@ class Executor
 
         if ($result !== 0) {
             if ($result === self::RESULT_CODE_COMMAND_NOT_FOUND) {
-                throw new CommandNotFoundError(implode("\t", $output));
+                throw new CommandNotFoundError(implode("\t", $output), $result);
             }
             else {
-                throw new ExecutionError(implode("\t", $output));
+                throw new ExecutionError(implode("\t", $output), $result);
             }
         }
         return $output;
