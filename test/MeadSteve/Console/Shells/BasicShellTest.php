@@ -5,7 +5,7 @@ use \MeadSteve\Console\Shells\BasicShell;
 class BasicShellTest extends \Prophecy\PhpUnit\ProphecyTestCase
 {
     /**
-     * @var \MeadSteve\Console\BasicShell
+     * @var \MeadSteve\Console\Shells\BasicShell
      */
     protected $testedShell;
 
