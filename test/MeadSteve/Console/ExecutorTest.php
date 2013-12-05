@@ -31,7 +31,7 @@ class ExecutorTest extends PHPUnit_Framework_TestCase
 
     function testExecute_ReturnsArrayOnValidCommand()
     {
-        $output = $this->testedExecutor->execute("git status");
+        $output = $this->testedExecutor->execute("git help");
         $this->assertInternalType('array', $output);
     }
 }
