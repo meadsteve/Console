@@ -9,11 +9,16 @@ class FromLinuxTranslatorTest extends \Prophecy\PhpUnit\ProphecyTestCase
      */
     protected $testedTranslator;
 
+    /**
+     * @var \Prophecy\Prophecy\ObjectProphecy
+     */
+    protected $mockEnvironment;
+
     protected function setUp()
     {
         parent::setUp();
-        $environment = $this->prophesize('\MeadSteve\Console\Environment');
-        $this->testedTranslator = new FromLinuxTranslator($environment->reveal());
+        $this->mockEnvironment = $this->prophesize('\MeadSteve\Console\Environment');
+        $this->testedTranslator = new FromLinuxTranslator($this->mockEnvironment->reveal());
     }
 
     public function testTranslate_ReturnsJustTheCommandAsStringWithNoArgs()
@@ -55,5 +60,47 @@ class FromLinuxTranslatorTest extends \Prophecy\PhpUnit\ProphecyTestCase
 
         $this->assertEquals('testing 1 2', $translatedCommand);
     }
+
+    public function testTranslate_SwitchedLstoDirOnWindows()
+    {
+        $this->mockEnvironment->isWindows()->willReturn(true);
+
+        $command = $this->prepareCommandExpectedToSwitch("ls", "dir");
+
+        $translatedCommand = $this->testedTranslator->translate(
+            $command->reveal()
+        );
+
+        $this->assertEquals('dir', $translatedCommand);
+    }
+
+    public function testTranslate_SwitchedWhichtoWhereOnWindows()
+    {
+        $this->mockEnvironment->isWindows()->willReturn(true);
+
+        $command = $this->prepareCommandExpectedToSwitch("which", "where");
+
+        $translatedCommand = $this->testedTranslator->translate(
+            $command->reveal()
+        );
+
+        $this->assertEquals('where', $translatedCommand);
+    }
+
+    protected function prepareCommandExpectedToSwitch($from, $to, $args = array()) {
+        $command = $this->prophesize('\MeadSteve\Console\Command');
+        $command->getArgs()->willReturn($args);
+
+        // The command should start as an $from command
+        $command->getCommand()->willReturn($from);
+
+        // our tested object should ask it to become dir
+        $command->setCommand($to)->will(function() use ($to) {
+            $this->getCommand()->willReturn($to);
+        });
+
+        return $command;
+    }
+
 }
  
