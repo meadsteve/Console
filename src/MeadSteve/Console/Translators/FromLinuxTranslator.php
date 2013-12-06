@@ -20,23 +20,27 @@ class FromLinuxTranslator extends BasicTranslator implements CommandTranslator
 
     public function translate(Command $command)
     {
+        $commandString = $command->getCommand();
+        $args = $command->getArgs();
+
         if ($this->environment->isWindows()) {
-            $command = $this->toWindows($command);
+            return $this->buildWindowsString($commandString, $args);
         }
-        return parent::translate($command);
+        else {
+            return $this->buildString($commandString, $args);
+        }
     }
 
-    protected function toWindows(Command $command) {
-        $translatedCommand = clone $command;
-        switch($command->getCommand()) {
+    protected function buildWindowsString($commandString, array $args) {
+        switch($commandString) {
             case 'ls':
-                $translatedCommand->setCommand('dir');
+                $commandString = 'dir';
                 break;
             case 'which':
-                $translatedCommand->setCommand('where');
+                $commandString = 'where';
                 break;
         }
 
-        return $translatedCommand;
+        return $this->buildString($commandString, $args);
     }
 } 

@@ -13,9 +13,13 @@ class BasicTranslator implements CommandTranslator
      */
     public function translate(Command $command)
     {
-        $parts = $command->getArgs();
-        array_unshift($parts, $command->getCommand());
-        return implode(' ',$parts);
+        return $this->buildString($command->getCommand(), $command->getArgs());
+    }
+
+    protected function buildString($commandString, array $args)
+    {
+        array_unshift($args, $commandString);
+        return implode(' ', $args);
     }
 
 } 

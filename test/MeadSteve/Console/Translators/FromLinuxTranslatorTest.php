@@ -65,7 +65,9 @@ class FromLinuxTranslatorTest extends \Prophecy\PhpUnit\ProphecyTestCase
     {
         $this->mockEnvironment->isWindows()->willReturn(true);
 
-        $command = $this->prepareCommandExpectedToSwitch("ls", "dir");
+        $command = $this->prophesize('\MeadSteve\Console\Command');
+        $command->getCommand()->willReturn("ls");
+        $command->getArgs()->willReturn(array());
 
         $translatedCommand = $this->testedTranslator->translate(
             $command->reveal()
@@ -78,28 +80,15 @@ class FromLinuxTranslatorTest extends \Prophecy\PhpUnit\ProphecyTestCase
     {
         $this->mockEnvironment->isWindows()->willReturn(true);
 
-        $command = $this->prepareCommandExpectedToSwitch("which", "where");
+        $command = $this->prophesize('\MeadSteve\Console\Command');
+        $command->getCommand()->willReturn("which");
+        $command->getArgs()->willReturn(array());
 
         $translatedCommand = $this->testedTranslator->translate(
             $command->reveal()
         );
 
         $this->assertEquals('where', $translatedCommand);
-    }
-
-    protected function prepareCommandExpectedToSwitch($from, $to, $args = array()) {
-        $command = $this->prophesize('\MeadSteve\Console\Command');
-        $command->getArgs()->willReturn($args);
-
-        // The command should start as an $from command
-        $command->getCommand()->willReturn($from);
-
-        // our tested object should ask it to become dir
-        $command->setCommand($to)->will(function() use ($to) {
-            $this->getCommand()->willReturn($to);
-        });
-
-        return $command;
     }
 
 }

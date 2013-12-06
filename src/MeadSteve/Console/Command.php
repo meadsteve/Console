@@ -55,10 +55,6 @@ class Command
         return $this->args;
     }
 
-    function setCommand($command) {
-        $this->command = $command;
-    }
-
     function getCommand() {
         return $this->command;
     }
